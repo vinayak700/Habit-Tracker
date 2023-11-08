@@ -1,0 +1,80 @@
+<link rel="stylesheet" href="/css/home.css">
+
+
+
+<div>
+    <!-- header  -->
+    <%- include('_header'); %>
+        <!----------- if user is not logged in ----------->
+        <% if(!locals.user) { %>
+            <div class="container d-flex justify-content-center align-items-center flex-column"
+                style="height:80vh; margin-left:8%;">
+                <h3 class="welcome-title">Welcome To Habit Tracker, keep your habits monitored & tracked all the time!
+                </h3>
+                <div class="d-flex gap-3">
+                    <a href="/users/sign-in">
+                        <div class="btn btn-secondary p-3 px-5">
+                            SignIn
+                        </div>
+                    </a>
+                    <a href="/users/sign-up">
+                        <div class="btn btn-secondary p-3 px-5">
+                            SignUp
+                        </div>
+                    </a>
+                </div>
+
+            </div>
+            <% } <!----------- if no habits are added ----------->
+                else if(locals.user && locals.habits.length==0) { %>
+
+                <%= habits %>
+                    <div id="noHabitText">Looks like you aren't tracking any habits yet, so...
+                        <br> what do you want to start doing every day? :)
+                    </div>
+                    <!-- button to open add habit form  -->
+                    <button id="open-btn-fixed" onclick="openForm()"> + Add Habit</button>
+                    <div class="form-popup" id="myForm">
+                        <form action="/users/habit/create-habit" id="createHabit" method="POST" class="form-container">
+                            <input type="text" name="title" placeholder="Enter habit title" required>
+                            <input type="text" name="desc" placeholder="Description">
+                            <button type="reset" id="cancel-btn" onclick="closeForm()">Cancel</button>
+                            <button type="submit" id="save-btn">Save</button>
+                        </form>
+                    </div>
+                    <% } <!------------ show habits ------------>
+                        else { %>
+                        <div>
+                            <div>
+
+                                <!-- weekly view -->
+                                <%- include('weekly_view'); %>
+
+                                    <!-- daily view  -->
+                                    <%- include('daily_view'); %>
+
+                            </div>
+
+
+                            <!-- button to open add habit form  -->
+                            <button id="open-btn" class="button-30" onclick="openForm()"> + Add Habit</button>
+                            <div class="form-popup" id="myForm">
+                                <form action="/users/habit/create-habit" id="createHabit" method="POST"
+                                    class="form-container">
+                                    <input type="text" name="title" placeholder="Enter habit title" required>
+                                    <input type="text" name="desc" placeholder="Description">
+                                    <button type="reset" id="cancel-btn" onclick="closeForm()">Cancel</button>
+                                    <button type="submit" id="save-btn">Save</button>
+                                </form>
+                            </div>
+                            <!-- button to toggle between daily/weekly view -->
+                            <button id="change-view" class="button-30" onclick="changeView()"> Show Daily</button>
+                        </div>
+                        <% } %>
+</div>
+
+
+
+
+<!-- importing this script to open/close form -->
+<script src="/js/home.js"></script>
