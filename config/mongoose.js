@@ -1,12 +1,15 @@
 const mongoose = require('mongoose');
 
-// storing the db on mongo atlas
+// Storing the DB on MongoDB Atlas
 const db = async () => {
     try {
-        await mongoose.connect('mongodb://localhost:27017/habit_Tracker');
-        console.log('Mongodb connection established...');
+        await mongoose.connect('mongodb+srv://vgupta:ZiVi5EWMQtKxiJo6@cluster0.khgpbvj.mongodb.net/test', {
+            useNewUrlParser: true,
+            useUnifiedTopology: true,
+        });
+        console.log('MongoDB connection established...');
     } catch (error) {
-        console.log('Error connecting to Mongodb', error);
+        console.error('Error connecting to MongoDB:', error.message);
     }
 }
 
